@@ -141,13 +141,24 @@
             padding: 15px 20px;
         }
 
-        .logo {
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo-img {
+            height: 40px;
+            width: auto;
+        }
+
+        .logo-text {
             font-size: 1.8rem;
             font-weight: 700;
             color: var(--blue);
         }
 
-        .logo span {
+        .logo-text span {
             color: var(--red);
         }
 
@@ -388,6 +399,85 @@
             justify-content: center;
             gap: 10px;
             margin-top: 15px;
+        }
+
+        /* Class Structure */
+        .class-structure {
+            background-color: var(--light-gray);
+            border-radius: 10px;
+            padding: 25px;
+            margin: 30px 0;
+            border: 1px solid var(--blue);
+        }
+
+        .class-structure-title {
+            font-size: 1.5rem;
+            color: var(--blue);
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .class-levels {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            justify-content: center;
+        }
+
+        .class-level {
+            background-color: var(--white);
+            border-radius: 8px;
+            padding: 15px;
+            border: 1px solid var(--blue);
+            min-width: 150px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .class-level:hover {
+            transform: translateY(-3px);
+            border-color: var(--red);
+            box-shadow: 0 5px 10px rgba(229, 9, 20, 0.1);
+        }
+
+        .class-level-name {
+            font-weight: 600;
+            color: var(--blue);
+            margin-bottom: 10px;
+        }
+
+        .subjects-list {
+            display: none;
+            margin-top: 15px;
+            text-align: left;
+        }
+
+        .subject-item {
+            padding: 8px 0;
+            border-bottom: 1px solid var(--border-gray);
+            cursor: pointer;
+        }
+
+        .subject-item:last-child {
+            border-bottom: none;
+        }
+
+        .chapters-list {
+            display: none;
+            margin-top: 10px;
+            padding-left: 15px;
+        }
+
+        .chapter-item {
+            padding: 5px 0;
+            cursor: pointer;
+        }
+
+        .download-section {
+            display: none;
+            margin-top: 15px;
+            text-align: center;
         }
 
         /* PYQ Section */
@@ -646,7 +736,11 @@
     <!-- Header -->
     <header>
         <div class="container header-container">
-            <a href="index.html" class="logo">Study<span>ToolZone</span></a>
+            <div class="logo-container">
+                <!-- Logo placeholder - you can replace with actual logo -->
+                <div class="logo-img" style="background-color: var(--blue); width: 40px; height: 40px; border-radius: 5px; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold;">STZ</div>
+                <div class="logo-text">Study<span>ToolZone</span></div>
+            </div>
             
             <div class="mobile-toggle">
                 <i class="fas fa-bars"></i>
@@ -819,78 +913,6 @@
                         <h4 class="tool-name">Currency Converter</h4>
                         <p class="tool-desc">Convert between different world currencies.</p>
                     </div>
-                    
-                    <div class="tool-card" onclick="window.location.href='gst-calculator.html'">
-                        <div class="tool-icon">
-                            <i class="fas fa-chart-line"></i>
-                        </div>
-                        <h4 class="tool-name">GST Calculator</h4>
-                        <p class="tool-desc">Calculate Goods and Services Tax amounts.</p>
-                    </div>
-                    
-                    <div class="tool-card" onclick="window.location.href='rd-calculator.html'">
-                        <div class="tool-icon">
-                            <i class="fas fa-piggy-bank"></i>
-                        </div>
-                        <h4 class="tool-name">RD Calculator</h4>
-                        <p class="tool-desc">Calculate returns on Recurring Deposits.</p>
-                    </div>
-                    
-                    <div class="tool-card" onclick="window.location.href='salary-calculator.html'">
-                        <div class="tool-icon">
-                            <i class="fas fa-money-check"></i>
-                        </div>
-                        <h4 class="tool-name">Salary Calculator</h4>
-                        <p class="tool-desc">Calculate take-home salary after deductions.</p>
-                    </div>
-                    
-                    <div class="tool-card" onclick="window.location.href='calorie-calculator.html'">
-                        <div class="tool-icon">
-                            <i class="fas fa-utensils"></i>
-                        </div>
-                        <h4 class="tool-name">Calorie Calculator</h4>
-                        <p class="tool-desc">Calculate daily calorie needs based on activity.</p>
-                    </div>
-                    
-                    <div class="tool-card" onclick="window.location.href='body-fat-calculator.html'">
-                        <div class="tool-icon">
-                            <i class="fas fa-user"></i>
-                        </div>
-                        <h4 class="tool-name">Body Fat Calculator</h4>
-                        <p class="tool-desc">Estimate body fat percentage.</p>
-                    </div>
-                    
-                    <div class="tool-card" onclick="window.location.href='height-calculator.html'">
-                        <div class="tool-icon">
-                            <i class="fas fa-ruler-vertical"></i>
-                        </div>
-                        <h4 class="tool-name">Height Calculator</h4>
-                        <p class="tool-desc">Convert between different height units.</p>
-                    </div>
-                    
-                    <div class="tool-card" onclick="window.location.href='weight-calculator.html'">
-                        <div class="tool-icon">
-                            <i class="fas fa-weight"></i>
-                        </div>
-                        <h4 class="tool-name">Weight Calculator</h4>
-                        <p class="tool-desc">Convert between different weight units.</p>
-                    </div>
-                    
-                    <div class="tool-card" onclick="window.location.href='gpa-calculator.html'">
-                        <div class="tool-icon">
-                            <i class="fas fa-graduation-cap"></i>
-                        </div>
-                        <h4 class="tool-name">GPA Calculator</h4>
-                        <p class="tool-desc">Calculate Grade Point Average from grades.</p>
-                    </div>
-                    
-                    <div class="tool-card" onclick="window.location.href='grade-calculator.html'">
-                        <div class="tool-icon">
-                            <i class="fas fa-chart-bar"></i>
-                        </div>
-                        <h4 class="tool-name">Grade Calculator</h4>
-                        <p class="tool-desc">Calculate final grade based on scores.</p>
-                    </div>
                 </div>
             </div>
             
@@ -929,76 +951,6 @@
                         <h4 class="tool-name">Question Generator AI</h4>
                         <p class="tool-desc">Generate practice questions from study material.</p>
                     </div>
-                    
-                    <div class="tool-card" onclick="window.location.href='topic-solution-finder.html'">
-                        <div class="tool-icon">
-                            <i class="fas fa-robot"></i>
-                        </div>
-                        <h4 class="tool-name">Topic Solution Finder</h4>
-                        <p class="tool-desc">Enter any study topic and get instant solutions.</p>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Utility Tools -->
-            <div class="tool-category">
-                <h3 class="category-title">Utility Tools</h3>
-                <div class="tools-grid">
-                    <div class="tool-card" onclick="window.location.href='word-counter.html'">
-                        <div class="tool-icon">
-                            <i class="fas fa-font"></i>
-                        </div>
-                        <h4 class="tool-name">Word Counter</h4>
-                        <p class="tool-desc">Count words, characters, sentences and paragraphs.</p>
-                    </div>
-                    
-                    <div class="tool-card" onclick="window.location.href='text-to-speech.html'">
-                        <div class="tool-icon">
-                            <i class="fas fa-volume-up"></i>
-                        </div>
-                        <h4 class="tool-name">Text to Speech</h4>
-                        <p class="tool-desc">Convert written text to natural sounding speech.</p>
-                    </div>
-                    
-                    <div class="tool-card" onclick="window.location.href='speech-to-text.html'">
-                        <div class="tool-icon">
-                            <i class="fas fa-microphone"></i>
-                        </div>
-                        <h4 class="tool-name">Speech to Text</h4>
-                        <p class="tool-desc">Transcribe spoken words into written text.</p>
-                    </div>
-                    
-                    <div class="tool-card" onclick="window.location.href='qr-code-generator.html'">
-                        <div class="tool-icon">
-                            <i class="fas fa-qrcode"></i>
-                        </div>
-                        <h4 class="tool-name">QR Code Generator</h4>
-                        <p class="tool-desc">Create custom QR codes for URLs, text and more.</p>
-                    </div>
-                    
-                    <div class="tool-card" onclick="window.location.href='random-password-generator.html'">
-                        <div class="tool-icon">
-                            <i class="fas fa-key"></i>
-                        </div>
-                        <h4 class="tool-name">Random Password Generator</h4>
-                        <p class="tool-desc">Generate strong, secure passwords instantly.</p>
-                    </div>
-                    
-                    <div class="tool-card" onclick="window.location.href='grammar-checker.html'">
-                        <div class="tool-icon">
-                            <i class="fas fa-spell-check"></i>
-                        </div>
-                        <h4 class="tool-name">Grammar Checker</h4>
-                        <p class="tool-desc">Check and correct grammar mistakes in text.</p>
-                    </div>
-                    
-                    <div class="tool-card" onclick="window.location.href='text-summarizer.html'">
-                        <div class="tool-icon">
-                            <i class="fas fa-file-alt"></i>
-                        </div>
-                        <h4 class="tool-name">Text Summarizer</h4>
-                        <p class="tool-desc">Generate concise summaries from long texts.</p>
-                    </div>
                 </div>
             </div>
         </div>
@@ -1009,6 +961,70 @@
         <div class="container">
             <h2 class="section-title">Study Zone</h2>
             <p class="section-subtitle">Access comprehensive notes and study materials for engineering and school classes.</p>
+            
+            <!-- Class Structure -->
+            <div class="class-structure">
+                <h3 class="class-structure-title">Class 6 to 12 Notes Structure</h3>
+                <div class="class-levels">
+                    <div class="class-level" onclick="toggleSubjects('class6')">
+                        <div class="class-level-name">Class 6</div>
+                        <div id="class6-subjects" class="subjects-list">
+                            <div class="subject-item" onclick="toggleChapters('class6-maths')">Mathematics</div>
+                            <div id="class6-maths" class="chapters-list">
+                                <div class="chapter-item" onclick="showDownload('class6-maths-ch1')">Chapter 1: Knowing Our Numbers</div>
+                                <div class="chapter-item" onclick="showDownload('class6-maths-ch2')">Chapter 2: Whole Numbers</div>
+                                <div class="chapter-item" onclick="showDownload('class6-maths-ch3')">Chapter 3: Playing with Numbers</div>
+                            </div>
+                            <div class="subject-item" onclick="toggleChapters('class6-science')">Science</div>
+                            <div id="class6-science" class="chapters-list">
+                                <div class="chapter-item" onclick="showDownload('class6-science-ch1')">Chapter 1: Food: Where Does It Come From?</div>
+                                <div class="chapter-item" onclick="showDownload('class6-science-ch2')">Chapter 2: Components of Food</div>
+                            </div>
+                        </div>
+                        <div id="class6-download" class="download-section">
+                            <a href="#" class="btn btn-primary" download>Download Notes</a>
+                        </div>
+                    </div>
+                    
+                    <div class="class-level" onclick="toggleSubjects('class7')">
+                        <div class="class-level-name">Class 7</div>
+                        <div id="class7-subjects" class="subjects-list">
+                            <div class="subject-item" onclick="toggleChapters('class7-maths')">Mathematics</div>
+                            <div id="class7-maths" class="chapters-list">
+                                <div class="chapter-item" onclick="showDownload('class7-maths-ch1')">Chapter 1: Integers</div>
+                                <div class="chapter-item" onclick="showDownload('class7-maths-ch2')">Chapter 2: Fractions and Decimals</div>
+                            </div>
+                            <div class="subject-item" onclick="toggleChapters('class7-science')">Science</div>
+                            <div id="class7-science" class="chapters-list">
+                                <div class="chapter-item" onclick="showDownload('class7-science-ch1')">Chapter 1: Nutrition in Plants</div>
+                                <div class="chapter-item" onclick="showDownload('class7-science-ch2')">Chapter 2: Nutrition in Animals</div>
+                            </div>
+                        </div>
+                        <div id="class7-download" class="download-section">
+                            <a href="#" class="btn btn-primary" download>Download Notes</a>
+                        </div>
+                    </div>
+                    
+                    <div class="class-level" onclick="toggleSubjects('class8')">
+                        <div class="class-level-name">Class 8</div>
+                        <div id="class8-subjects" class="subjects-list">
+                            <div class="subject-item" onclick="toggleChapters('class8-maths')">Mathematics</div>
+                            <div id="class8-maths" class="chapters-list">
+                                <div class="chapter-item" onclick="showDownload('class8-maths-ch1')">Chapter 1: Rational Numbers</div>
+                                <div class="chapter-item" onclick="showDownload('class8-maths-ch2')">Chapter 2: Linear Equations</div>
+                            </div>
+                            <div class="subject-item" onclick="toggleChapters('class8-science')">Science</div>
+                            <div id="class8-science" class="chapters-list">
+                                <div class="chapter-item" onclick="showDownload('class8-science-ch1')">Chapter 1: Crop Production</div>
+                                <div class="chapter-item" onclick="showDownload('class8-science-ch2')">Chapter 2: Microorganisms</div>
+                            </div>
+                        </div>
+                        <div id="class8-download" class="download-section">
+                            <a href="#" class="btn btn-primary" download>Download Notes</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
             
             <!-- Engineering Notes -->
             <h3 style="font-size: 1.8rem; margin: 40px 0 20px; color: var(--blue);">Engineering Notes</h3>
@@ -1043,109 +1059,6 @@
                     <div class="notes-actions">
                         <a href="mechanical-notes.html" class="btn btn-outline">View Notes</a>
                         <a href="downloads/mechanical-notes.pdf" class="btn btn-primary" download>Download PDF</a>
-                    </div>
-                </div>
-                
-                <div class="stream-card" onclick="window.location.href='civil-notes.html'">
-                    <div class="stream-icon">
-                        <i class="fas fa-hard-hat"></i>
-                    </div>
-                    <h4 class="stream-name">Civil</h4>
-                    <div class="notes-actions">
-                        <a href="civil-notes.html" class="btn btn-outline">View Notes</a>
-                        <a href="downloads/civil-notes.pdf" class="btn btn-primary" download>Download PDF</a>
-                    </div>
-                </div>
-                
-                <div class="stream-card" onclick="window.location.href='electrical-notes.html'">
-                    <div class="stream-icon">
-                        <i class="fas fa-bolt"></i>
-                    </div>
-                    <h4 class="stream-name">Electrical</h4>
-                    <div class="notes-actions">
-                        <a href="electrical-notes.html" class="btn btn-outline">View Notes</a>
-                        <a href="downloads/electrical-notes.pdf" class="btn btn-primary" download>Download PDF</a>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Class Notes -->
-            <h3 style="font-size: 1.8rem; margin: 60px 0 20px; color: var(--blue);">Class 6 to 12 Notes</h3>
-            <div class="classes-grid">
-                <div class="class-card" onclick="window.location.href='class6-notes.html'">
-                    <div class="class-icon">
-                        <i class="fas fa-graduation-cap"></i>
-                    </div>
-                    <h4 class="class-name">Class 6</h4>
-                    <div class="notes-actions">
-                        <a href="class6-notes.html" class="btn btn-outline">View Notes</a>
-                        <a href="downloads/class6-notes.pdf" class="btn btn-primary" download>Download PDF</a>
-                    </div>
-                </div>
-                
-                <div class="class-card" onclick="window.location.href='class7-notes.html'">
-                    <div class="class-icon">
-                        <i class="fas fa-graduation-cap"></i>
-                    </div>
-                    <h4 class="class-name">Class 7</h4>
-                    <div class="notes-actions">
-                        <a href="class7-notes.html" class="btn btn-outline">View Notes</a>
-                        <a href="downloads/class7-notes.pdf" class="btn btn-primary" download>Download PDF</a>
-                    </div>
-                </div>
-                
-                <div class="class-card" onclick="window.location.href='class8-notes.html'">
-                    <div class="class-icon">
-                        <i class="fas fa-graduation-cap"></i>
-                    </div>
-                    <h4 class="class-name">Class 8</h4>
-                    <div class="notes-actions">
-                        <a href="class8-notes.html" class="btn btn-outline">View Notes</a>
-                        <a href="downloads/class8-notes.pdf" class="btn btn-primary" download>Download PDF</a>
-                    </div>
-                </div>
-                
-                <div class="class-card" onclick="window.location.href='class9-notes.html'">
-                    <div class="class-icon">
-                        <i class="fas fa-graduation-cap"></i>
-                    </div>
-                    <h4 class="class-name">Class 9</h4>
-                    <div class="notes-actions">
-                        <a href="class9-notes.html" class="btn btn-outline">View Notes</a>
-                        <a href="downloads/class9-notes.pdf" class="btn btn-primary" download>Download PDF</a>
-                    </div>
-                </div>
-                
-                <div class="class-card" onclick="window.location.href='class10-notes.html'">
-                    <div class="class-icon">
-                        <i class="fas fa-graduation-cap"></i>
-                    </div>
-                    <h4 class="class-name">Class 10</h4>
-                    <div class="notes-actions">
-                        <a href="class10-notes.html" class="btn btn-outline">View Notes</a>
-                        <a href="downloads/class10-notes.pdf" class="btn btn-primary" download>Download PDF</a>
-                    </div>
-                </div>
-                
-                <div class="class-card" onclick="window.location.href='class11-notes.html'">
-                    <div class="class-icon">
-                        <i class="fas fa-graduation-cap"></i>
-                    </div>
-                    <h4 class="class-name">Class 11</h4>
-                    <div class="notes-actions">
-                        <a href="class11-notes.html" class="btn btn-outline">View Notes</a>
-                        <a href="downloads/class11-notes.pdf" class="btn btn-primary" download>Download PDF</a>
-                    </div>
-                </div>
-                
-                <div class="class-card" onclick="window.location.href='class12-notes.html'">
-                    <div class="class-icon">
-                        <i class="fas fa-graduation-cap"></i>
-                    </div>
-                    <h4 class="class-name">Class 12</h4>
-                    <div class="notes-actions">
-                        <a href="class12-notes.html" class="btn btn-outline">View Notes</a>
-                        <a href="downloads/class12-notes.pdf" class="btn btn-primary" download>Download PDF</a>
                     </div>
                 </div>
             </div>
@@ -1192,30 +1105,6 @@
                     <div class="pyq-actions">
                         <a href="maths-papers.html" class="btn btn-outline">View Paper</a>
                         <a href="downloads/maths-papers.pdf" class="btn btn-primary" download>Download PDF</a>
-                    </div>
-                </div>
-                
-                <div class="pyq-card">
-                    <div class="pyq-icon">
-                        <i class="fas fa-dna"></i>
-                    </div>
-                    <h4 class="pyq-name">Biology PYQ</h4>
-                    <p>Download previous year Biology question papers</p>
-                    <div class="pyq-actions">
-                        <a href="biology-papers.html" class="btn btn-outline">View Paper</a>
-                        <a href="downloads/biology-papers.pdf" class="btn btn-primary" download>Download PDF</a>
-                    </div>
-                </div>
-                
-                <div class="pyq-card">
-                    <div class="pyq-icon">
-                        <i class="fas fa-book"></i>
-                    </div>
-                    <h4 class="pyq-name">English PYQ</h4>
-                    <p>Download previous year English question papers</p>
-                    <div class="pyq-actions">
-                        <a href="english-papers.html" class="btn btn-outline">View Paper</a>
-                        <a href="downloads/english-papers.pdf" class="btn btn-primary" download>Download PDF</a>
                     </div>
                 </div>
             </div>
@@ -1293,15 +1182,6 @@
                         <li><a href="about-us.html">About Us</a></li>
                     </ul>
                 </div>
-                
-                <div class="footer-column">
-                    <h3>Support</h3>
-                    <ul class="footer-links">
-                        <li><a href="help-center.html">Help Center</a></li>
-                        <li><a href="contact.html">Contact Us</a></li>
-                        <li><a href="faq.html">FAQ</a></li>
-                    </ul>
-                </div>
             </div>
             
             <div class="copyright">
@@ -1331,6 +1211,54 @@
                 alert(`Searching for: ${searchTerm}`);
             }
         });
+
+        // Class structure functionality
+        function toggleSubjects(classId) {
+            const subjects = document.getElementById(`${classId}-subjects`);
+            const isVisible = subjects.style.display === 'block';
+            
+            // Hide all subjects first
+            document.querySelectorAll('.subjects-list').forEach(el => {
+                el.style.display = 'none';
+            });
+            
+            // Hide all download sections
+            document.querySelectorAll('.download-section').forEach(el => {
+                el.style.display = 'none';
+            });
+            
+            // Show selected subjects if not already visible
+            if (!isVisible) {
+                subjects.style.display = 'block';
+            }
+        }
+
+        function toggleChapters(subjectId) {
+            const chapters = document.getElementById(subjectId);
+            const isVisible = chapters.style.display === 'block';
+            
+            // Hide all chapters first
+            document.querySelectorAll('.chapters-list').forEach(el => {
+                el.style.display = 'none';
+            });
+            
+            // Show selected chapters if not already visible
+            if (!isVisible) {
+                chapters.style.display = 'block';
+            }
+        }
+
+        function showDownload(chapterId) {
+            // Hide all download sections first
+            document.querySelectorAll('.download-section').forEach(el => {
+                el.style.display = 'none';
+            });
+            
+            // Find the parent class level and show its download section
+            const classLevel = document.querySelector(`[onclick*="${chapterId.split('-')[0]}"]`);
+            const downloadSection = classLevel.querySelector('.download-section');
+            downloadSection.style.display = 'block';
+        }
     </script>
 </body>
 </html>
