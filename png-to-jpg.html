@@ -1,0 +1,303 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>PNG → JPG / PDF → JPG — StudyToolZone</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<style>
+  :root{
+    --white:#ffffff; --blue:#0056ff; --red:#e50914; --muted:#4b5563; --card:#fbfdff;
+    --radius:12px;
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0; font-family:Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial;
+    background:#ffffff; color:#000; -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:960px;margin:28px auto;padding:20px;}
+  .card{background:var(--card);border-radius:var(--radius);padding:18px;border:1px solid rgba(0,86,255,0.06);box-shadow:0 8px 30px rgba(6,30,70,0.04)}
+  h1{margin:0 0 6px;color:var(--blue);font-size:20px}
+  p.lead{margin:0 0 12px;color:var(--muted)}
+  .row{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+  label.small{font-size:13px;color:var(--muted);display:block;margin-bottom:6px}
+
+  input[type=file]{display:block}
+  .controls{margin-top:12px;display:flex;gap:10px;flex-wrap:wrap}
+  .btn{padding:10px 14px;border-radius:10px;border:0;cursor:pointer;font-weight:700}
+  .btn.primary{background:var(--red);color:white}
+  .btn.ghost{background:transparent;border:1px solid var(--blue);color:var(--blue)}
+  .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px}
+  @media (max-width:700px){.form-grid{grid-template-columns:1fr}}
+
+  .preview{margin-top:18px;display:flex;gap:18px;flex-wrap:wrap;align-items:flex-start}
+  .preview img{max-width:320px;border-radius:8px;border:1px solid #e6eefc;display:block}
+  .meta{font-size:13px;color:var(--muted);margin-top:8px}
+  .download-area{margin-top:12px}
+  .small-muted{font-size:13px;color:var(--muted)}
+
+  /* responsive */
+  @media (max-width:480px){
+    h1{font-size:18px}
+  }
+
+  /* accessibility focus */
+  button:focus, input:focus, a:focus { outline:3px solid rgba(0,86,255,0.18); outline-offset:2px; }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="card" role="main" aria-labelledby="toolTitle">
+      <h1 id="toolTitle">PNG → JPG & PDF → JPG Converter</h1>
+      <p class="lead">Upload PNG/JPG/WebP images or a PDF (first page). Convert to high-quality JPG and download instantly — fully client-side and mobile-friendly.</p>
+
+      <label class="small" for="fileInput">Choose file (image or PDF)</label>
+      <input id="fileInput" type="file" accept="image/*,application/pdf" aria-describedby="fileHelp"/>
+      <div id="fileHelp" class="small-muted">Supported: PNG, JPG, WEBP, PDF. For PDFs we convert the first page to JPG.</div>
+
+      <div class="form-grid" style="margin-top:12px">
+        <div>
+          <label class="small">JPG Quality (0.1 — 1.0)</label>
+          <input id="quality" type="range" min="0.1" max="1" step="0.05" value="0.9" />
+          <div class="small-muted">Current: <span id="qualityVal">0.90</span></div>
+        </div>
+
+        <div>
+          <label class="small">Max Width (px) — 0 = original</label>
+          <input id="maxWidth" type="number" min="0" value="0" />
+        </div>
+
+        <div>
+          <label class="small">Max Height (px) — 0 = original</label>
+          <input id="maxHeight" type="number" min="0" value="0" />
+        </div>
+
+        <div>
+          <label class="small">Keep EXIF (where possible)</label>
+          <div style="margin-top:8px"><input id="keepExif" type="checkbox" /> <label for="keepExif" class="small-muted">Try to preserve orientation metadata</label></div>
+        </div>
+      </div>
+
+      <div class="controls">
+        <button id="convertBtn" class="btn primary" disabled>Convert & Download</button>
+        <button id="clearBtn" class="btn ghost" style="display:none">Clear</button>
+      </div>
+
+      <div id="status" class="small-muted" style="margin-top:12px" aria-live="polite"></div>
+
+      <div id="previewArea" class="preview" style="display:none">
+        <div>
+          <div class="small-muted">Source Preview</div>
+          <img id="srcPreview" alt="Source preview" />
+          <div class="meta" id="srcMeta"></div>
+        </div>
+
+        <div>
+          <div class="small-muted">Converted JPG</div>
+          <img id="outPreview" alt="Output preview" />
+          <div class="meta" id="outMeta"></div>
+          <div class="download-area" id="downloadArea"></div>
+        </div>
+      </div>
+
+      <div class="small-muted" style="margin-top:12px">
+        Tip: For best web images use quality 0.75–0.9. PDF input will convert first page. Files are processed locally — nothing is uploaded.
+      </div>
+    </div>
+  </div>
+
+<!-- pdf.js for PDF rendering (convert PDF page -> canvas) -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.216/pdf.min.js"></script>
+
+<script>
+(function(){
+  // pdf.js worker
+  if(window['pdfjsLib']) {
+    pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.216/pdf.worker.min.js';
+  }
+
+  const fileInput = document.getElementById('fileInput');
+  const convertBtn = document.getElementById('convertBtn');
+  const clearBtn = document.getElementById('clearBtn');
+  const quality = document.getElementById('quality');
+  const qualityVal = document.getElementById('qualityVal');
+  const maxWidth = document.getElementById('maxWidth');
+  const maxHeight = document.getElementById('maxHeight');
+  const keepExif = document.getElementById('keepExif');
+  const status = document.getElementById('status');
+  const previewArea = document.getElementById('previewArea');
+  const srcPreview = document.getElementById('srcPreview');
+  const outPreview = document.getElementById('outPreview');
+  const srcMeta = document.getElementById('srcMeta');
+  const outMeta = document.getElementById('outMeta');
+  const downloadArea = document.getElementById('downloadArea');
+
+  let selectedFile = null;
+  let srcURL = null;
+
+  function formatBytes(bytes){
+    if(bytes === 0) return '0 B';
+    const k = 1024, dm = 2;
+    const sizes = ['B','KB','MB','GB'];
+    const i = Math.floor(Math.log(bytes / 1) / Math.log(k));
+    return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
+  }
+
+  quality.addEventListener('input', ()=> { qualityVal.textContent = Number(quality.value).toFixed(2); });
+
+  fileInput.addEventListener('change', async (e)=>{
+    const f = e.target.files && e.target.files[0];
+    resetPreview();
+    if(!f) return;
+    selectedFile = f;
+    convertBtn.disabled = false;
+    clearBtn.style.display = 'inline-block';
+    status.textContent = `Selected: ${f.name} (${formatBytes(f.size)}) — type: ${f.type || 'unknown'}`;
+
+    if(srcURL) URL.revokeObjectURL(srcURL);
+    srcURL = URL.createObjectURL(f);
+
+    if(f.type === 'application/pdf' || f.name.toLowerCase().endsWith('.pdf')) {
+      // render first page of PDF using pdf.js
+      status.textContent = 'Rendering PDF first page...';
+      try {
+        const pdf = await pdfjsLib.getDocument({url: srcURL}).promise;
+        const page = await pdf.getPage(1);
+        const viewport = page.getViewport({scale: 1.5});
+        const canvas = document.createElement('canvas');
+        const ctx = canvas.getContext('2d');
+        canvas.width = viewport.width;
+        canvas.height = viewport.height;
+        await page.render({canvasContext: ctx, viewport: viewport}).promise;
+        srcPreview.src = canvas.toDataURL('image/png');
+        srcPreview.onload = ()=> {
+          previewArea.style.display = 'flex';
+          srcMeta.textContent = `${canvas.width}×${canvas.height} • ${formatBytes(f.size)}`;
+        };
+      } catch(err){
+        console.error(err);
+        status.textContent = 'Error rendering PDF: ' + (err.message || err);
+      }
+    } else if(f.type.startsWith('image/') || /\.(png|jpe?g|webp|gif)$/i.test(f.name)) {
+      srcPreview.src = srcURL;
+      srcPreview.onload = ()=> {
+        previewArea.style.display = 'flex';
+        srcMeta.textContent = `${srcPreview.naturalWidth}×${srcPreview.naturalHeight} • ${formatBytes(f.size)}`;
+      };
+    } else {
+      status.textContent = 'Unsupported file type. Please upload an image or PDF.';
+      convertBtn.disabled = true;
+    }
+  });
+
+  clearBtn.addEventListener('click', ()=>{
+    fileInput.value = '';
+    selectedFile = null;
+    convertBtn.disabled = true;
+    clearBtn.style.display = 'none';
+    status.textContent = '';
+    resetPreview();
+    if(srcURL){ URL.revokeObjectURL(srcURL); srcURL = null; }
+  });
+
+  function resetPreview(){
+    previewArea.style.display = 'none';
+    srcPreview.src = '';
+    outPreview.src = '';
+    srcMeta.textContent = '';
+    outMeta.textContent = '';
+    downloadArea.innerHTML = '';
+  }
+
+  convertBtn.addEventListener('click', async ()=>{
+    if(!selectedFile) return;
+    convertBtn.disabled = true;
+    status.textContent = 'Converting...';
+
+    try {
+      let canvas;
+      if(selectedFile.type === 'application/pdf' || selectedFile.name.toLowerCase().endsWith('.pdf')) {
+        // pdf -> render first page to canvas
+        const pdf = await pdfjsLib.getDocument({url: srcURL}).promise;
+        const page = await pdf.getPage(1);
+        const viewport = page.getViewport({scale: 2}); // higher scale for quality
+        canvas = document.createElement('canvas');
+        canvas.width = viewport.width;
+        canvas.height = viewport.height;
+        const ctx = canvas.getContext('2d');
+        await page.render({canvasContext: ctx, viewport: viewport}).promise;
+      } else {
+        // image -> load into Image
+        const img = await loadImageFromFile(selectedFile);
+        // compute target size
+        const {w,h} = calculateTargetSize(img.width, img.height, Number(maxWidth.value), Number(maxHeight.value));
+        canvas = document.createElement('canvas');
+        canvas.width = w;
+        canvas.height = h;
+        const ctx = canvas.getContext('2d');
+
+        // if original has transparency and we want JPG, fill white background
+        ctx.fillStyle = '#ffffff';
+        ctx.fillRect(0,0,w,h);
+        ctx.drawImage(img, 0, 0, w, h);
+      }
+
+      // export to jpeg blob
+      const q = Number(quality.value);
+      const blob = await new Promise((resolve, reject) => {
+        canvas.toBlob(b => { if(b) resolve(b); else reject(new Error('toBlob failed')); }, 'image/jpeg', q);
+      });
+
+      // show preview & download link
+      const outURL = URL.createObjectURL(blob);
+      outPreview.src = outURL;
+      outPreview.onload = ()=> {
+        outMeta.textContent = `${outPreview.naturalWidth}×${outPreview.naturalHeight} • ${formatBytes(blob.size)}`;
+      };
+
+      const baseName = selectedFile.name.replace(/\.[^/.]+$/, "");
+      const outName = baseName + '.jpg';
+      downloadArea.innerHTML = `<a class="btn primary" href="${outURL}" download="${outName}" title="Download ${outName}">Download JPG</a>`;
+
+      status.textContent = 'Conversion ready — click Download JPG.';
+    } catch(err){
+      console.error(err);
+      status.textContent = 'Conversion failed: ' + (err.message || err);
+    } finally {
+      convertBtn.disabled = false;
+    }
+  });
+
+  // helpers
+  function loadImageFromFile(file){
+    return new Promise((resolve,reject)=>{
+      const url = URL.createObjectURL(file);
+      const img = new Image();
+      img.onload = ()=> { URL.revokeObjectURL(url); resolve(img); };
+      img.onerror = ()=> { URL.revokeObjectURL(url); reject(new Error('Failed to load image')); };
+      img.src = url;
+    });
+  }
+
+  function calculateTargetSize(origW, origH, maxW, maxH){
+    // if both 0 -> keep original
+    if(!maxW && !maxH) return {w: origW, h: origH};
+    let w = origW, h = origH;
+    if(maxW && w > maxW){
+      const ratio = maxW / w;
+      w = Math.round(w * ratio);
+      h = Math.round(h * ratio);
+    }
+    if(maxH && h > maxH){
+      const ratio = maxH / h;
+      h = Math.round(h * ratio);
+      w = Math.round(w * ratio);
+    }
+    return {w,h};
+  }
+
+})();
+</script>
+</body>
+</html>
