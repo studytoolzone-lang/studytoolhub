@@ -1,0 +1,343 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>StudyToolZone — Home</title>
+<meta name="description" content="StudyToolZone — All study tools, notes & calculators in one place. Convert, compress, generate AI content and download notes easily." />
+
+<!-- Colors: White + Red + Blue theme -->
+<style>
+  :root{
+    --white:#ffffff;
+    --blue:#0056ff;
+    --red:#e50914;
+    --muted:#4b5563;
+    --card:#fbfdff;
+    --border: rgba(0,86,255,0.12);
+    --radius:12px;
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0;
+    font-family:Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial;
+    background: #ffffff;
+    color:#111827;
+    -webkit-font-smoothing:antialiased;
+  }
+  .container{max-width:1200px;margin:0 auto;padding:20px;}
+
+  /* Header */
+  header{
+    position:sticky; top:0; z-index:50;
+    background:var(--white); border-bottom:1px solid var(--border);
+    box-shadow: 0 6px 18px rgba(6, 30, 70, 0.03);
+  }
+  .header-inner{display:flex;align-items:center;gap:18px;justify-content:space-between;padding:12px 20px;max-width:1200px;margin:0 auto;}
+  .logo{font-weight:700;font-size:20px;color:var(--blue);}
+  .nav{display:flex;gap:14px;align-items:center}
+  .nav a{color:#0b1320;text-decoration:none;font-weight:600}
+  .cta{background:var(--red);color:white;padding:8px 12px;border-radius:8px;border:0;font-weight:700}
+  .hamburger{display:none;border:1px solid var(--border);padding:8px;border-radius:8px}
+
+  /* Hero */
+  .hero{padding:48px 20px;}
+  .hero-card{background:linear-gradient(180deg, rgba(240,245,255,1) 0%, rgba(255,255,255,1) 100%);border-radius:14px;padding:32px;border:1px solid var(--border);display:flex;gap:20px;align-items:center;flex-wrap:wrap;}
+  .hero h1{color:var(--blue);margin:0;font-size:28px}
+  .hero p{color:var(--muted);margin:6px 0 0}
+  .search-row{display:flex;gap:10px;margin-top:12px;width:100%}
+  .search-row input{flex:1;padding:12px;border-radius:10px;border:1px solid var(--border);outline:none}
+  .btn-red{background:var(--red);color:#fff;padding:10px 14px;border-radius:10px;border:0;font-weight:700;cursor:pointer}
+  .btn-blue-outline{background:transparent;border:1px solid var(--blue);color:var(--blue);padding:10px 12px;border-radius:10px;cursor:pointer}
+
+  /* Tools Showcase */
+  .section{margin-top:30px;padding:18px;border-radius:12px;background:linear-gradient(180deg, rgba(255,255,255,1) 0%, rgba(240,245,255,1) 100%);border:1px solid var(--border);}
+  .section h2{color:var(--blue);margin:0 0 12px 0}
+  .tools-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px}
+  .tool-card{background:var(--white);border:1px solid var(--border);padding:16px;border-radius:12px;transition:transform .18s ease, box-shadow .18s;display:flex;flex-direction:column;gap:8px}
+  .tool-card:hover{transform:translateY(-6px);box-shadow:0 10px 30px rgba(6,30,70,0.06);border-color:var(--red)}
+  .tool-icon{width:48px;height:48px;border-radius:10px;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;color:var(--blue);font-size:18px}
+  .tool-title{font-weight:700;color:#0b1320;margin:0}
+  .tool-desc{color:var(--muted);font-size:14px;margin:0}
+  .tool-actions{margin-top:auto;display:flex;gap:8px}
+
+  /* Notes / PYQ lists */
+  .list-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin-top:12px}
+  .card{background:var(--white);border:1px solid var(--border);padding:12px;border-radius:10px}
+  .small{font-size:13px;color:var(--muted)}
+
+  /* Footer */
+  footer{margin-top:34px;padding:28px;border-top:1px solid var(--border);background:linear-gradient(180deg, rgba(255,255,255,1) 0%, rgba(240,245,255,1) 100%);}
+  .footer-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
+
+  /* Responsive */
+  @media (max-width:900px){
+    .nav{display:none}
+    .hamburger{display:inline-block}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <div style="display:flex;align-items:center;gap:12px">
+      <div class="logo">StudyToolZone</div>
+      <!-- Logo upload placeholder (for CMS / builder integration, replace with actual uploader component) -->
+      <div class="small" style="font-size:13px;color:var(--muted)">Logo upload: replace with uploader in your CMS</div>
+    </div>
+
+    <nav class="nav">
+      <a href="#">Home</a>
+      <a href="#tools-section">Tools</a>
+      <a href="#notes-section">Notes</a>
+      <a href="#classes">Classes</a>
+      <a href="#engineering">Engineering</a>
+      <a href="#pyq">PYQ</a>
+      <a href="#login">Login</a>
+    </nav>
+
+    <div style="display:flex;gap:10px;align-items:center">
+      <button class="cta btn-red">Start Using Tools</button>
+      <button class="hamburger">☰</button>
+    </div>
+  </div>
+</header>
+
+<main class="container">
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-card" role="region" aria-label="Hero">
+      <div style="flex:1;min-width:240px">
+        <h1>All Study Tools, Notes & Calculators in One Place</h1>
+        <p>Your complete multitool hub for students.</p>
+
+        <div class="search-row">
+          <input id="globalSearch" placeholder="Search tools, notes or topics..." aria-label="Search tools or notes" />
+          <button id="exploreBtn" class="btn-red">Explore Tools</button>
+          <button id="notesBtn" class="btn-blue-outline">Find Notes</button>
+        </div>
+      </div>
+      <div style="min-width:240px;text-align:right">
+        <!-- optional illustration -->
+        <img src="" alt="" style="max-width:160px;opacity:.6" />
+      </div>
+    </div>
+  </section>
+
+  <!-- TOOLS SHOWCASE -->
+  <section id="tools-section" class="section" aria-labelledby="toolsHeading">
+    <h2 id="toolsHeading">Tools Showcase</h2>
+    <p class="small">Click a tool to open its page. Add new tools by registering them in the `tools` array in the script.</p>
+
+    <div id="toolsGrid" class="tools-grid" aria-live="polite"></div>
+  </section>
+
+  <!-- NOTES -->
+  <section id="notes-section" class="section" aria-labelledby="notesHeading">
+    <h2 id="notesHeading">Notes & Study Resources</h2>
+
+    <h3 style="color:var(--blue);margin-top:8px">Class 6 — 12 Notes</h3>
+    <div id="classesGrid" class="list-grid"></div>
+
+    <h3 style="color:var(--blue);margin-top:18px">Engineering Notes</h3>
+    <div id="engGrid" class="list-grid"></div>
+  </section>
+
+  <!-- PREVIOUS YEAR PAPERS (PYQ) -->
+  <section id="pyq" class="section">
+    <h2>Class 12 Previous Year Papers</h2>
+    <div id="pyqGrid" class="list-grid"></div>
+  </section>
+
+  <!-- WHY -->
+  <section class="section" style="margin-top:18px">
+    <h2>Why StudyToolZone</h2>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin-top:12px">
+      <div class="card"><strong>Fast & Reliable</strong><div class="small">Optimized for speed and offline-first tools.</div></div>
+      <div class="card"><strong>All-in-One Toolkit</strong><div class="small">Converters, calculators, AI helpers and notes.</div></div>
+      <div class="card"><strong>Student Friendly</strong><div class="small">Simple UI, quick downloads and search.</div></div>
+    </div>
+  </section>
+</main>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <strong>StudyToolZone</strong>
+        <div class="small">All-in-One tools and notes for students.</div>
+      </div>
+      <div>
+        <strong>Quick Links</strong>
+        <div class="small"><a href="#tools-section">Tools</a> • <a href="#notes-section">Notes</a> • <a href="#pyq">PYQ</a></div>
+      </div>
+      <div>
+        <strong>Support</strong>
+        <div class="small">Contact: <a href="mailto:studytoolzone@gmail.com">studytoolzone@gmail.com</a></div>
+        <div style="margin-top:8px" class="small">
+          <a href="#">Privacy Policy</a> • <a href="#">Terms of Use</a> • <a href="#">Trust Center</a> • <a href="#">About Us</a>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top:18px;color:var(--muted);font-size:13px">
+      © <span id="year"></span> StudyToolZone. All rights reserved.
+    </div>
+  </div>
+</footer>
+
+<!-- Script: render tools & notes. Add new tools/notes by editing the arrays below. -->
+<script>
+/*
+  How to integrate a subtool (example: Image Compressor):
+  1) Create a file named `image-compressor.html` in the same folder (or point to correct path).
+  2) Add an entry in the `tools` array below:
+     { id: 'image-compressor', title: 'Image Compressor', desc: 'Short tool description', category:'Convertor', file:'image-compressor.html', icon:'🖼️' }
+  3) The card will auto-appear. Clicking opens the file in same tab.
+*/
+
+/* ------------------- Tools registry ------------------- */
+const tools = [
+  { id:'pdf-to-word', title:'PDF to Word', desc:'Convert PDF to editable DOCX. Text-only extraction (client-side).', category:'Convertor', file:'pdf-to-word.html', icon:'📄' },
+  { id:'image-compressor', title:'Image Compressor', desc:'Compress JPG/PNG/WebP in-browser. Private and fast.', category:'Convertor', file:'image-compressor.html', icon:'🖼️' },
+  { id:'ai-ppt', title:'AI PPT Generator', desc:'Generate slide content & export PPTX using AI (server or client integration).', category:'AI', file:'ai-ppt.html', icon:'📊' },
+  { id:'bg-remover', title:'Background Remover AI', desc:'Remove image backgrounds (client or server-powered).', category:'AI', file:'bg-remover.html', icon:'✂️' },
+  { id:'image-gen', title:'Image Generator AI', desc:'Generate images from prompts using AI.', category:'AI', file:'image-gen.html', icon:'🖌️' },
+  { id:'question-gen', title:'Question Generator AI', desc:'Type any topic → get practice questions & solutions.', category:'AI', file:'question-gen.html', icon:'❓' }
+  // Add more tools here...
+];
+
+/* ------------------- Notes registry (structure example) ------------------- */
+const classNotes = [
+  { class:'Class 10', subjects:[
+      { name:'Mathematics', chapters:[ {title:'Chapter 1: Number Systems', file:'notes/class10/math/ch1.pdf'}, {title:'Chapter 2: Algebra', file:'notes/class10/math/ch2.pdf'} ] },
+      { name:'Science', chapters:[ {title:'Chapter 1: Chemical Reactions', file:'notes/class10/science/ch1.pdf'} ] }
+    ]
+  },
+  { class:'Class 12', subjects:[
+      { name:'Physics', chapters:[ {title:'Mechanics', file:'notes/class12/physics/mechanics.pdf'} ] },
+      { name:'Chemistry', chapters:[ {title:'Organic Chemistry', file:'notes/class12/chem/org.pdf'} ] }
+    ]
+  }
+];
+
+const engineeringNotes = [
+  { stream:'CSE', subjects:[
+      { name:'Data Structures', chapters:[ {title:'Arrays & Linked Lists', file:'notes/eng/cse/ds/arrays.pdf'} ] },
+      { name:'DBMS', chapters:[ {title:'ER Model', file:'notes/eng/cse/dbms/er_model.pdf'} ] }
+    ]
+  },
+  { stream:'ECE', subjects:[
+      { name:'Digital Electronics', chapters:[ {title:'Combinational Circuits', file:'notes/eng/ece/digital/combinational.pdf'} ] }
+    ]
+  }
+];
+
+/* ------------------- PYQ registry ------------------- */
+const pyq = [
+  { subject:'Physics', file:'pyq/class12/physics_pyq.pdf' },
+  { subject:'Chemistry', file:'pyq/class12/chemistry_pyq.pdf' },
+  { subject:'Mathematics', file:'pyq/class12/math_pyq.pdf' }
+];
+
+/* ------------------- Render functions ------------------- */
+function renderTools(list){
+  const grid = document.getElementById('toolsGrid');
+  grid.innerHTML = '';
+  list.forEach(t => {
+    const card = document.createElement('article');
+    card.className = 'tool-card';
+    card.innerHTML = `
+      <div style="display:flex;gap:10px;align-items:center">
+        <div class="tool-icon">${t.icon || '🔧'}</div>
+        <div style="flex:1">
+          <div class="tool-title">${t.title}</div>
+          <p class="tool-desc">${t.desc}</p>
+        </div>
+      </div>
+      <div class="tool-actions">
+        <button class="btn-blue-outline" data-open="${t.file}">Open</button>
+        <button class="btn-blue-outline" onclick="alert('Preview coming soon')">Preview</button>
+      </div>
+    `;
+    grid.appendChild(card);
+  });
+
+  // Attach open handlers (delegation)
+  grid.querySelectorAll('button[data-open]').forEach(btn=>{
+    btn.addEventListener('click', ()=> {
+      const file = btn.getAttribute('data-open');
+      // open in same tab - change to window.open(file,'_blank') if you prefer new tab
+      window.location.href = file;
+    });
+  });
+}
+
+function renderClasses(classes){
+  const grid = document.getElementById('classesGrid');
+  grid.innerHTML = '';
+  classes.forEach(cl => {
+    const el = document.createElement('div'); el.className='card';
+    el.innerHTML = `<strong>${cl.class}</strong><div class="small" style="margin-top:8px">${cl.subjects.map(s=>s.name).join(' • ')}</div>
+      <div style="margin-top:8px">
+        ${cl.subjects.map(s=>' <div style="margin-top:8px"><strong>'+s.name+'</strong><ul>'+ s.chapters.map(ch=>'<li>'+ch.title+' — <a href="'+ch.file+'" download>Download</a> | <a href="'+ch.file+'" target="_blank">View</a></li>').join('') +'</ul></div>').join('')}
+      </div>`;
+    grid.appendChild(el);
+  });
+}
+
+function renderEngineering(list){
+  const grid = document.getElementById('engGrid');
+  grid.innerHTML = '';
+  list.forEach(st => {
+    const el = document.createElement('div'); el.className='card';
+    el.innerHTML = `<strong>${st.stream}</strong><div class="small" style="margin-top:8px">${st.subjects.map(s=>s.name).join(' • ')}</div>
+      <div style="margin-top:8px">
+        ${st.subjects.map(s=>' <div style="margin-top:8px"><strong>'+s.name+'</strong><ul>'+ s.chapters.map(ch=>'<li>'+ch.title+' — <a href="'+ch.file+'" download>Download</a> | <a href="'+ch.file+'" target="_blank">View</a></li>').join('') +'</ul></div>').join('')}
+      </div>`;
+    grid.appendChild(el);
+  });
+}
+
+function renderPYQ(list){
+  const grid = document.getElementById('pyqGrid');
+  grid.innerHTML = '';
+  list.forEach(p=>{
+    const el = document.createElement('div'); el.className='card';
+    el.innerHTML = `<strong>${p.subject}</strong><div style="margin-top:8px"><a href="${p.file}" download class="small">Download PDF</a> • <a href="${p.file}" target="_blank" class="small">View</a></div>`;
+    grid.appendChild(el);
+  });
+}
+
+/* ------------------- Basic search (tools + notes) ------------------- */
+document.getElementById('globalSearch').addEventListener('input', (e)=>{
+  const q = e.target.value.trim().toLowerCase();
+  if(!q) { renderTools(tools); renderClasses(classNotes); renderEngineering(engineeringNotes); renderPYQ(pyq); return; }
+
+  const filtered = tools.filter(t => (t.title + ' ' + t.desc + ' ' + t.category).toLowerCase().includes(q));
+  renderTools(filtered);
+
+  // You can extend search to notes / pyq similarly (left as exercise)
+});
+
+/* ------------------- Wire up hero buttons */ 
+document.getElementById('exploreBtn').addEventListener('click', ()=> {
+  window.location.hash = '#tools-section';
+  window.scrollTo({top: document.getElementById('tools-section').offsetTop - 70, behavior:'smooth'});
+});
+document.getElementById('notesBtn').addEventListener('click', ()=> {
+  window.location.hash = '#notes-section';
+  window.scrollTo({top: document.getElementById('notes-section').offsetTop - 70, behavior:'smooth'});
+});
+
+/* ------------------- Init render ------------------- */
+document.getElementById('year').textContent = new Date().getFullYear();
+renderTools(tools);
+renderClasses(classNotes);
+renderEngineering(engineeringNotes);
+renderPYQ(pyq);
+</script>
+</body>
+</html>
