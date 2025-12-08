@@ -1,0 +1,923 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Age Calculator - StudyToolZone</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --white: #ffffff;
+            --royal-blue: #0056ff;
+            --deep-red: #e50914;
+            --black: #000000;
+            --grey: #333333;
+            --light-grey: #f5f5f5;
+            --border-radius: 8px;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: var(--white) !important;
+            color: var(--black);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Header */
+        .header {
+            background-color: var(--white);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            padding: 15px 0;
+            margin-bottom: 30px;
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--royal-blue);
+            text-decoration: none;
+        }
+
+        .nav {
+            display: flex;
+            gap: 25px;
+        }
+
+        .nav a {
+            color: var(--grey);
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+
+        .nav a:hover {
+            color: var(--royal-blue);
+        }
+
+        .back-btn {
+            color: var(--royal-blue);
+            text-decoration: none;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            margin-bottom: 20px;
+        }
+
+        /* Main Content */
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 40px;
+        }
+
+        @media (min-width: 992px) {
+            .main-content {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        .card {
+            background: var(--white);
+            border-radius: var(--border-radius);
+            padding: 30px;
+            box-shadow: var(--shadow);
+            border: 2px solid var(--royal-blue);
+        }
+
+        .card-title {
+            font-size: 1.5rem;
+            color: var(--royal-blue);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .card-title i {
+            font-size: 1.8rem;
+        }
+
+        /* Input Section */
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--grey);
+        }
+
+        .input-group input, .input-group select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+
+        .input-group input:focus, .input-group select:focus {
+            border-color: var(--royal-blue);
+            box-shadow: 0 0 0 3px rgba(0, 86, 255, 0.1);
+            outline: none;
+        }
+
+        .date-inputs {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 15px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 24px;
+            border-radius: var(--border-radius);
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            border: none;
+            font-size: 1rem;
+            text-align: center;
+            text-decoration: none;
+        }
+
+        .btn-primary {
+            background-color: var(--deep-red);
+            color: var(--white);
+        }
+
+        .btn-primary:hover {
+            background-color: #c40812;
+            transform: translateY(-2px);
+            box-shadow: var(--shadow);
+        }
+
+        .btn-secondary {
+            background-color: transparent;
+            color: var(--royal-blue);
+            border: 2px solid var(--royal-blue);
+        }
+
+        .btn-secondary:hover {
+            background-color: rgba(0, 86, 255, 0.05);
+            transform: translateY(-2px);
+        }
+
+        .btn-full {
+            width: 100%;
+            margin-top: 10px;
+        }
+
+        /* Age Results */
+        .age-results {
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        .age-display {
+            font-size: 3.5rem;
+            font-weight: 700;
+            color: var(--royal-blue);
+            margin-bottom: 5px;
+        }
+
+        .age-unit {
+            font-size: 1.2rem;
+            color: var(--grey);
+            margin-bottom: 30px;
+        }
+
+        .detailed-results {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        @media (max-width: 768px) {
+            .detailed-results {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        .result-card {
+            background: #f8f9fa;
+            border-radius: var(--border-radius);
+            padding: 20px 15px;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            border: 1px solid #eee;
+        }
+
+        .result-value {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--royal-blue);
+            margin-bottom: 5px;
+        }
+
+        .result-label {
+            font-size: 0.9rem;
+            color: var(--grey);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* Zodiac Section */
+        .zodiac-section {
+            margin-top: 30px;
+            padding: 20px;
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            border-radius: var(--border-radius);
+            color: white;
+            text-align: center;
+            display: none;
+        }
+
+        .zodiac-section.show {
+            display: block;
+        }
+
+        .zodiac-title {
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+        }
+
+        .zodiac-content {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .zodiac-icon {
+            font-size: 3.5rem;
+            flex-shrink: 0;
+        }
+
+        .zodiac-info {
+            text-align: left;
+        }
+
+        .zodiac-name {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .zodiac-dates {
+            font-size: 0.95rem;
+            opacity: 0.9;
+        }
+
+        /* Next Birthday */
+        .next-birthday {
+            margin-top: 30px;
+            padding: 20px;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            border-radius: var(--border-radius);
+            color: white;
+            text-align: center;
+            display: none;
+        }
+
+        .next-birthday.show {
+            display: block;
+        }
+
+        .next-birthday-title {
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+        }
+
+        .countdown {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+        }
+
+        @media (max-width: 576px) {
+            .countdown {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        .countdown-item {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 6px;
+            padding: 15px 10px;
+        }
+
+        .countdown-value {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .countdown-label {
+            font-size: 0.85rem;
+            opacity: 0.9;
+        }
+
+        /* Milestones */
+        .milestones-section {
+            margin-top: 30px;
+        }
+
+        .milestones-title {
+            color: var(--royal-blue);
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .milestones-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
+        }
+
+        .milestone-card {
+            background: #f8f9fa;
+            border-radius: var(--border-radius);
+            padding: 15px;
+            text-align: center;
+            border: 1px solid #eee;
+        }
+
+        .milestone-age {
+            font-weight: 700;
+            color: var(--royal-blue);
+            margin-bottom: 5px;
+        }
+
+        .milestone-event {
+            font-size: 0.9rem;
+            color: var(--grey);
+        }
+
+        /* Real-time Age */
+        .real-time-age {
+            margin-top: 30px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: var(--border-radius);
+            text-align: center;
+        }
+
+        .real-time-title {
+            color: var(--royal-blue);
+            margin-bottom: 15px;
+        }
+
+        .real-time-display {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--deep-red);
+            margin-bottom: 10px;
+        }
+
+        .real-time-breakdown {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            font-size: 0.9rem;
+            color: var(--grey);
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            margin-top: 50px;
+            padding: 20px;
+            color: var(--grey);
+            font-size: 0.9rem;
+            border-top: 1px solid #eee;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav {
+                display: none;
+            }
+            
+            .card {
+                padding: 20px 15px;
+            }
+            
+            .date-inputs {
+                grid-template-columns: 1fr;
+            }
+            
+            .age-display {
+                font-size: 2.5rem;
+            }
+            
+            .zodiac-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .zodiac-info {
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <div class="header">
+        <div class="header-container">
+            <a href="#" class="logo">StudyToolZone</a>
+            <div class="nav">
+                <a href="#">Home</a>
+                <a href="#">Tools</a>
+                <a href="#">Notes</a>
+                <a href="#">Login</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <a href="#" class="back-btn">
+            <i class="fas fa-arrow-left"></i> Back to Tools
+        </a>
+
+        <h1 style="color: var(--royal-blue); margin-bottom: 10px;">Age Calculator</h1>
+        <p style="color: var(--grey); margin-bottom: 30px;">Calculate your exact age in years, months, days, and even milliseconds. Discover your zodiac sign and life milestones.</p>
+
+        <div class="main-content">
+            <!-- Left Column - Input -->
+            <div class="card">
+                <h2 class="card-title">
+                    <i class="fas fa-calendar-alt"></i> Enter Birth Details
+                </h2>
+                
+                <div class="input-group">
+                    <label for="birthDate">Select Birth Date</label>
+                    <input type="date" id="birthDate" max="">
+                </div>
+                
+                <div class="input-group">
+                    <label for="compareDate">Compare with Date (Optional)</label>
+                    <input type="date" id="compareDate">
+                    <p style="font-size: 0.9rem; color: var(--grey); margin-top: 5px;">
+                        Leave empty to calculate age as of today
+                    </p>
+                </div>
+                
+                <div class="input-group">
+                    <label for="timezone">Timezone</label>
+                    <select id="timezone">
+                        <option value="local">Local Time</option>
+                        <option value="utc">UTC/GMT</option>
+                    </select>
+                </div>
+                
+                <button class="btn btn-primary btn-full" id="calculateBtn">
+                    Calculate Age
+                </button>
+                
+                <button class="btn btn-secondary btn-full" id="resetBtn" style="margin-top: 10px;">
+                    Reset
+                </button>
+                
+                <div class="real-time-age" id="realTimeAge" style="display: none;">
+                    <h3 class="real-time-title">Live Age Counter</h3>
+                    <div class="real-time-display" id="realTimeDisplay">0 years, 0 months, 0 days</div>
+                    <div class="real-time-breakdown">
+                        <div id="liveYears">0 years</div>
+                        <div id="liveMonths">0 months</div>
+                        <div id="liveDays">0 days</div>
+                        <div id="liveHours">0 hours</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Column - Results -->
+            <div class="card">
+                <h2 class="card-title">
+                    <i class="fas fa-calculator"></i> Age Results
+                </h2>
+                
+                <div class="age-results">
+                    <div class="age-display" id="ageDisplay">--</div>
+                    <div class="age-unit" id="ageUnit">years old</div>
+                    
+                    <div class="detailed-results">
+                        <div class="result-card">
+                            <div class="result-value" id="yearsResult">--</div>
+                            <div class="result-label">Years</div>
+                        </div>
+                        <div class="result-card">
+                            <div class="result-value" id="monthsResult">--</div>
+                            <div class="result-label">Months</div>
+                        </div>
+                        <div class="result-card">
+                            <div class="result-value" id="daysResult">--</div>
+                            <div class="result-label">Days</div>
+                        </div>
+                        <div class="result-card">
+                            <div class="result-value" id="hoursResult">--</div>
+                            <div class="result-label">Hours</div>
+                        </div>
+                    </div>
+                    
+                    <div class="next-birthday" id="nextBirthday">
+                        <h3 class="next-birthday-title">Time Until Next Birthday</h3>
+                        <div class="countdown">
+                            <div class="countdown-item">
+                                <div class="countdown-value" id="countdownMonths">--</div>
+                                <div class="countdown-label">Months</div>
+                            </div>
+                            <div class="countdown-item">
+                                <div class="countdown-value" id="countdownDays">--</div>
+                                <div class="countdown-label">Days</div>
+                            </div>
+                            <div class="countdown-item">
+                                <div class="countdown-value" id="countdownHours">--</div>
+                                <div class="countdown-label">Hours</div>
+                            </div>
+                            <div class="countdown-item">
+                                <div class="countdown-value" id="countdownMinutes">--</div>
+                                <div class="countdown-label">Minutes</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="zodiac-section" id="zodiacSection">
+                        <h3 class="zodiac-title">Your Zodiac Sign</h3>
+                        <div class="zodiac-content">
+                            <div class="zodiac-icon" id="zodiacIcon">♈</div>
+                            <div class="zodiac-info">
+                                <div class="zodiac-name" id="zodiacName">Aries</div>
+                                <div class="zodiac-dates" id="zodiacDates">March 21 - April 19</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="milestones-section">
+                    <h3 class="milestones-title">Life Milestones</h3>
+                    <div class="milestones-grid" id="milestonesGrid">
+                        <!-- Milestones will be dynamically generated here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- How-to Section -->
+        <div class="card" style="margin-top: 40px;">
+            <h2 class="card-title">
+                <i class="fas fa-info-circle"></i> How to Use the Age Calculator
+            </h2>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px;">
+                <div>
+                    <h3 style="color: var(--royal-blue); margin-bottom: 10px;">Step 1: Enter Birth Date</h3>
+                    <p>Select your date of birth using the date picker or enter it manually.</p>
+                </div>
+                <div>
+                    <h3 style="color: var(--royal-blue); margin-bottom: 10px;">Step 2: Optional Comparison Date</h3>
+                    <p>You can calculate your age as of any date in the past or future. Leave empty for current age.</p>
+                </div>
+                <div>
+                    <h3 style="color: var(--royal-blue); margin-bottom: 10px;">Step 3: Calculate</h3>
+                    <p>Click "Calculate Age" to see your exact age breakdown and additional information.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        <p>StudyToolZone - Age Calculator &copy; 2025 | All rights reserved</p>
+    </div>
+
+    <script>
+        // DOM Elements
+        const birthDateInput = document.getElementById('birthDate');
+        const compareDateInput = document.getElementById('compareDate');
+        const timezoneSelect = document.getElementById('timezone');
+        const calculateBtn = document.getElementById('calculateBtn');
+        const resetBtn = document.getElementById('resetBtn');
+        const ageDisplay = document.getElementById('ageDisplay');
+        const ageUnit = document.getElementById('ageUnit');
+        const yearsResult = document.getElementById('yearsResult');
+        const monthsResult = document.getElementById('monthsResult');
+        const daysResult = document.getElementById('daysResult');
+        const hoursResult = document.getElementById('hoursResult');
+        const nextBirthday = document.getElementById('nextBirthday');
+        const countdownMonths = document.getElementById('countdownMonths');
+        const countdownDays = document.getElementById('countdownDays');
+        const countdownHours = document.getElementById('countdownHours');
+        const countdownMinutes = document.getElementById('countdownMinutes');
+        const zodiacSection = document.getElementById('zodiacSection');
+        const zodiacIcon = document.getElementById('zodiacIcon');
+        const zodiacName = document.getElementById('zodiacName');
+        const zodiacDates = document.getElementById('zodiacDates');
+        const milestonesGrid = document.getElementById('milestonesGrid');
+        const realTimeAge = document.getElementById('realTimeAge');
+        const realTimeDisplay = document.getElementById('realTimeDisplay');
+        const liveYears = document.getElementById('liveYears');
+        const liveMonths = document.getElementById('liveMonths');
+        const liveDays = document.getElementById('liveDays');
+        const liveHours = document.getElementById('liveHours');
+
+        // Variables
+        let birthDate = null;
+        let liveUpdateInterval = null;
+
+        // Set max date to today for birth date
+        const today = new Date();
+        const todayFormatted = today.toISOString().split('T')[0];
+        birthDateInput.max = todayFormatted;
+        compareDateInput.max = todayFormatted;
+
+        // Set default birth date to 20 years ago for demo
+        const defaultBirthDate = new Date();
+        defaultBirthDate.setFullYear(today.getFullYear() - 20);
+        birthDateInput.value = defaultBirthDate.toISOString().split('T')[0];
+
+        // Event Listeners
+        calculateBtn.addEventListener('click', calculateAge);
+        resetBtn.addEventListener('click', resetCalculator);
+
+        // Functions
+        function calculateAge() {
+            const birthDateValue = new Date(birthDateInput.value);
+            const compareDateValue = compareDateInput.value ? new Date(compareDateInput.value) : new Date();
+            
+            if (!birthDateInput.value) {
+                alert('Please enter your birth date');
+                return;
+            }
+            
+            if (birthDateValue > compareDateValue) {
+                alert('Birth date cannot be in the future');
+                return;
+            }
+            
+            // Store birth date for live updates
+            birthDate = birthDateValue;
+            
+            // Calculate age
+            const age = getAge(birthDateValue, compareDateValue);
+            
+            // Update display
+            updateDisplay(age, compareDateValue);
+            
+            // Calculate next birthday
+            calculateNextBirthday(birthDateValue, compareDateValue);
+            
+            // Determine zodiac sign
+            determineZodiac(birthDateValue);
+            
+            // Generate milestones
+            generateMilestones(birthDateValue, compareDateValue);
+            
+            // Start live age counter if comparing with today
+            const isToday = compareDateValue.toDateString() === new Date().toDateString();
+            if (isToday) {
+                startLiveAgeCounter(birthDateValue);
+            } else {
+                stopLiveAgeCounter();
+            }
+        }
+
+        function getAge(birthDate, compareDate) {
+            let years = compareDate.getFullYear() - birthDate.getFullYear();
+            let months = compareDate.getMonth() - birthDate.getMonth();
+            let days = compareDate.getDate() - birthDate.getDate();
+            
+            // Adjust for negative days
+            if (days < 0) {
+                months--;
+                const prevMonth = new Date(compareDate.getFullYear(), compareDate.getMonth(), 0);
+                days += prevMonth.getDate();
+            }
+            
+            // Adjust for negative months
+            if (months < 0) {
+                years--;
+                months += 12;
+            }
+            
+            // Calculate total time in different units
+            const diffTime = Math.abs(compareDate - birthDate);
+            const totalDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+            const totalHours = Math.floor(diffTime / (1000 * 60 * 60));
+            const totalMinutes = Math.floor(diffTime / (1000 * 60));
+            const totalSeconds = Math.floor(diffTime / 1000);
+            
+            // Calculate hours for current day
+            const hours = compareDate.getHours();
+            
+            return {
+                years,
+                months,
+                days,
+                hours,
+                totalDays,
+                totalHours,
+                totalMinutes,
+                totalSeconds
+            };
+        }
+
+        function updateDisplay(age, compareDate) {
+            ageDisplay.textContent = age.years;
+            yearsResult.textContent = age.years;
+            monthsResult.textContent = age.months;
+            daysResult.textContent = age.days;
+            hoursResult.textContent = age.hours;
+            
+            // Show/hide sections based on whether we're comparing with today
+            const isToday = compareDate.toDateString() === new Date().toDateString();
+            nextBirthday.classList.toggle('show', isToday);
+            zodiacSection.classList.add('show');
+            realTimeAge.style.display = isToday ? 'block' : 'none';
+            
+            // Update age unit text
+            ageUnit.textContent = age.years === 1 ? 'year old' : 'years old';
+        }
+
+        function calculateNextBirthday(birthDate, compareDate) {
+            const currentYear = compareDate.getFullYear();
+            let nextBirthday = new Date(currentYear, birthDate.getMonth(), birthDate.getDate());
+            
+            // If birthday already passed this year, use next year
+            if (nextBirthday < compareDate) {
+                nextBirthday.setFullYear(currentYear + 1);
+            }
+            
+            // Calculate time difference
+            const diffTime = nextBirthday - compareDate;
+            const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+            
+            // Calculate breakdown
+            const months = Math.floor(diffDays / 30);
+            const days = diffDays % 30;
+            const hours = Math.floor((diffTime % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((diffTime % (1000 * 60 * 60)) / (1000 * 60));
+            
+            countdownMonths.textContent = months;
+            countdownDays.textContent = days;
+            countdownHours.textContent = hours;
+            countdownMinutes.textContent = minutes;
+        }
+
+        function determineZodiac(birthDate) {
+            const month = birthDate.getMonth() + 1;
+            const day = birthDate.getDate();
+            
+            const zodiacSigns = [
+                { name: "Aries", icon: "♈", dates: "Mar 21 - Apr 19", start: [3, 21], end: [4, 19] },
+                { name: "Taurus", icon: "♉", dates: "Apr 20 - May 20", start: [4, 20], end: [5, 20] },
+                { name: "Gemini", icon: "♊", dates: "May 21 - Jun 20", start: [5, 21], end: [6, 20] },
+                { name: "Cancer", icon: "♋", dates: "Jun 21 - Jul 22", start: [6, 21], end: [7, 22] },
+                { name: "Leo", icon: "♌", dates: "Jul 23 - Aug 22", start: [7, 23], end: [8, 22] },
+                { name: "Virgo", icon: "♍", dates: "Aug 23 - Sep 22", start: [8, 23], end: [9, 22] },
+                { name: "Libra", icon: "♎", dates: "Sep 23 - Oct 22", start: [9, 23], end: [10, 22] },
+                { name: "Scorpio", icon: "♏", dates: "Oct 23 - Nov 21", start: [10, 23], end: [11, 21] },
+                { name: "Sagittarius", icon: "♐", dates: "Nov 22 - Dec 21", start: [11, 22], end: [12, 21] },
+                { name: "Capricorn", icon: "♑", dates: "Dec 22 - Jan 19", start: [12, 22], end: [1, 19] },
+                { name: "Aquarius", icon: "♒", dates: "Jan 20 - Feb 18", start: [1, 20], end: [2, 18] },
+                { name: "Pisces", icon: "♓", dates: "Feb 19 - Mar 20", start: [2, 19], end: [3, 20] }
+            ];
+            
+            for (const sign of zodiacSigns) {
+                const [startMonth, startDay] = sign.start;
+                const [endMonth, endDay] = sign.end;
+                
+                if ((month === startMonth && day >= startDay) || 
+                    (month === endMonth && day <= endDay) ||
+                    (startMonth > endMonth && (month > startMonth || month < endMonth))) {
+                    
+                    zodiacIcon.textContent = sign.icon;
+                    zodiacName.textContent = sign.name;
+                    zodiacDates.textContent = sign.dates;
+                    return;
+                }
+            }
+        }
+
+        function generateMilestones(birthDate, compareDate) {
+            const milestones = [
+                { age: 0.5, event: "6 months old" },
+                { age: 1, event: "1st Birthday" },
+                { age: 5, event: "Start School" },
+                { age: 10, event: "Double Digits" },
+                { age: 13, event: "Become a Teenager" },
+                { age: 16, event: "Can Drive (in many places)" },
+                { age: 18, event: "Become an Adult" },
+                { age: 21, event: "Legal Drinking Age (US)" },
+                { age: 25, event: "Quarter Century" },
+                { age: 30, event: "30th Birthday" },
+                { age: 40, event: "40th Birthday" },
+                { age: 50, event: "Half Century" },
+                { age: 65, event: "Retirement Age" },
+                { age: 100, event: "Century Celebration" }
+            ];
+            
+            const currentAge = compareDate.getFullYear() - birthDate.getFullYear();
+            let html = '';
+            
+            milestones.forEach(milestone => {
+                const milestoneDate = new Date(birthDate);
+                milestoneDate.setFullYear(birthDate.getFullYear() + milestone.age);
+                
+                const isPast = milestoneDate <= compareDate;
+                const ageText = milestone.age === 0.5 ? "6 months" : 
+                               milestone.age === 1 ? "1 year" : 
+                               `${milestone.age} years`;
+                
+                html += `
+                    <div class="milestone-card ${isPast ? 'past-milestone' : 'future-milestone'}">
+                        <div class="milestone-age">${ageText}</div>
+                        <div class="milestone-event">${milestone.event}</div>
+                        <div class="milestone-date" style="font-size: 0.8rem; color: #666; margin-top: 5px;">
+                            ${milestoneDate.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })}
+                        </div>
+                    </div>
+                `;
+            });
+            
+            milestonesGrid.innerHTML = html;
+        }
+
+        function startLiveAgeCounter(birthDate) {
+            stopLiveAgeCounter(); // Clear any existing interval
+            
+            liveUpdateInterval = setInterval(() => {
+                const now = new Date();
+                const age = getAge(birthDate, now);
+                
+                realTimeDisplay.textContent = `${age.years} years, ${age.months} months, ${age.days} days`;
+                liveYears.textContent = `${age.years} years`;
+                liveMonths.textContent = `${age.months} months`;
+                liveDays.textContent = `${age.days} days`;
+                liveHours.textContent = `${now.getHours()} hours`;
+            }, 1000);
+        }
+
+        function stopLiveAgeCounter() {
+            if (liveUpdateInterval) {
+                clearInterval(liveUpdateInterval);
+                liveUpdateInterval = null;
+            }
+        }
+
+        function resetCalculator() {
+            birthDateInput.value = defaultBirthDate.toISOString().split('T')[0];
+            compareDateInput.value = '';
+            ageDisplay.textContent = '--';
+            yearsResult.textContent = '--';
+            monthsResult.textContent = '--';
+            daysResult.textContent = '--';
+            hoursResult.textContent = '--';
+            nextBirthday.classList.remove('show');
+            zodiacSection.classList.remove('show');
+            realTimeAge.style.display = 'none';
+            stopLiveAgeCounter();
+            
+            // Clear milestones
+            milestonesGrid.innerHTML = '';
+            
+            // Reset countdown
+            countdownMonths.textContent = '--';
+            countdownDays.textContent = '--';
+            countdownHours.textContent = '--';
+            countdownMinutes.textContent = '--';
+        }
+
+        // Initialize by calculating age with default values
+        calculateAge();
+    </script>
+</body>
+</html>
